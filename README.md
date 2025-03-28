@@ -1,10 +1,10 @@
-# haddixscript
+# multidoc
 
 A Go-based utility that processes input through multiple AI models concurrently (OpenAI, Claude, and Gemini) and provides a summarized comparison of their responses.
 
 ## Description
 
-HaddixScript allows you to send the same prompt to different AI models simultaneously and compare their responses. The tool:
+Multidoc allows you to send the same prompt to different AI models simultaneously and compare their responses. The tool:
 
 1. Takes text input from stdin
 2. Processes the input through multiple AI models in parallel:
@@ -32,8 +32,8 @@ This tool is useful for comparing how different AI models respond to the same in
 1. Clone the repository:
 
    ```
-   git clone https://github.com/xssdoctor/haddixscript.git
-   cd haddixscript
+   git clone https://github.com/xssdoctor/multidoc.git
+   cd multidoc
    ```
 
 2. Install the required Go dependencies:
@@ -44,12 +44,12 @@ This tool is useful for comparing how different AI models respond to the same in
 
 3. API Key Configuration:
 
-   The application will automatically create a config directory at `~/.config/multidoc/multidoc/` with a default `.env` file on first run.
+   The application will automatically create a config directory at `~/.config/multidoc` with a default `.env` file on first run.
 
    Edit this file to add your API keys:
 
    ```
-   ~/.config/multidoc/multidoc/.env
+   ~/.config/multidoc/.env
    ```
 
    Add your API keys:
@@ -68,17 +68,17 @@ You can pipe text to the program or use interactive input:
 
 ```bash
 # Using a pipe
-echo "Compare the benefits of REST vs GraphQL" | go run app.go
+echo "Compare the benefits of REST vs GraphQL" | go run multidoc.go
 
 # Using interactive input
-go run app.go
+go run multidoc.go
 # Then type your prompt and press Ctrl+D when finished
 ```
 
 For larger prompts, you can use a text file:
 
 ```bash
-cat prompt.txt | go run app.go
+cat prompt.txt | go run multidoc.go
 ```
 
 The output will display:
@@ -92,16 +92,16 @@ The output will display:
 To build an executable:
 
 ```bash
-go build -o haddixscript
+go build -o multidoc
 ```
 
 Then you can run it directly:
 
 ```bash
-./haddixscript
+./multidoc
 ```
 
-When you run the application for the first time, it will check if the configuration directory exists at `~/.config/multidoc/multidoc/` and create it if necessary, along with a template `.env` file. The application will then exit, allowing you to add your API keys before running it again.
+When you run the application for the first time, it will check if the configuration directory exists at `~/.config/multidoc` and create it if necessary, along with a template `.env` file. The application will then exit, allowing you to add your API keys before running it again.
 
 ## License
 
