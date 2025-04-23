@@ -150,7 +150,7 @@ func main() {
 	fmt.Printf("All models responded. Generating summary...\n")
 
 	// Step 7: Combine all outputs into a new prompt for gpt-o1
-	combinedPrompt := "Summarize the following outputs from different AI models:\n"
+	combinedPrompt := "Summarize the following outputs from different AI models. Analyze at all of them, combine them, and make sure you don't omit any of each one's individual best parts\n"
 	for i, output := range allOutputs {
 		combinedPrompt += fmt.Sprintf("Output from %s (%.2fs): %s\n\n", 
 			modelNames[i], modelTimes[i].Seconds(), output)
