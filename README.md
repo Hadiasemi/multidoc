@@ -109,4 +109,4 @@ MIT
 
 ## Author
 
-xssdoctor
+xssdoctor & jhaddix
