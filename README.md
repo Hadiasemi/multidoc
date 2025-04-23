@@ -1,10 +1,10 @@
 # multidoc
 
-A Go-based utility that processes input through multiple AI models concurrently (OpenAI, Claude, and Gemini) and provides a summarized comparison of their responses.
+A Go-based utility that processes input through multiple AI models concurrently (OpenAI, Claude, and Gemini) and provides a combination of their responses. Keeping each one's individual best parts. This is useful for research and is sometimes refferred to as multipromting or metaprompting. 
 
 ## Description
 
-Multidoc allows you to send the same prompt to different AI models simultaneously and compare their responses. The tool:
+Multidoc allows you to send the same prompt to different AI models simultaneously and combine their responses. The tool:
 
 1. Takes text input from stdin
 2. Processes the input through multiple AI models in parallel:
@@ -14,10 +14,8 @@ Multidoc allows you to send the same prompt to different AI models simultaneousl
    - Gemini 2.0 Flash (Google)
    - Claude 3.7 Sonnet (Anthropic)
 3. Collects responses from all models with timing information
-4. Generates a summary of all model outputs using o1-mini
-5. Displays the summary along with timing details
-
-This tool is useful for comparing how different AI models respond to the same input, benchmarking response times, and getting a consolidated view of different AI capabilities.
+4. Generates a combination of all model outputs using o1-mini
+5. Displays the output along with timing details
 
 ## Requirements
 
@@ -84,7 +82,7 @@ cat prompt.txt | go run multidoc.go
 The output will display:
 
 - Progress updates as each model responds
-- A summary comparing all model responses
+- A combination of the models best outputs
 - Timing information for each model and the total execution
 
 ## Build
