@@ -2,7 +2,7 @@
 
 [![Go Version](https://img.shields.io/badge/Go-1.18+-00ADD8.svg)](https://golang.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Go-based utility that processes input through multiple AI models concurrently (OpenAI, Claude, Gemini, and optionally Lambda.Chat) and provides a combined response, preserving the best parts of each individual output. Ideal for research, comparison, and leveraging the strengths of different models (often referred to as multi-prompting or meta-prompting). By (@xssdoctor)[https://x.com/xssdoctor] and (@jhaddix)[https://x.com/Jhaddix] of (Arcanum Infoirmation Security)[https://www.arcanum-sec.com/]
+A Go-based utility that processes input through multiple AI models concurrently (OpenAI, Claude, Gemini, and optionally Lambda.Chat) and provides a combined response, preserving the best parts of each individual output. Ideal for research, comparison, and leveraging the strengths of different models (often referred to as multi-prompting or meta-prompting). By [@xssdoctor](https://x.com/xssdoctor) and [@jhaddix](https://x.com/Jhaddix0 of [Arcanum Infoirmation Security](https://www.arcanum-sec.com/)
 
 ## Features
 
