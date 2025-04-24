@@ -1,117 +1,120 @@
 # multidoc
 
-A Go-based utility that processes input through multiple AI models concurrently (OpenAI, Claude, Gemini, and optionally Lambda.Chat) and provides a combination of their responses. Keeping each one's individual best parts. This is useful for research and is sometimes refferred to as multipromting or metaprompting.
+[![Go Version](https://img.shields.io/badge/Go-1.18+-00ADD8.svg)](https://golang.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Description
+A Go-based utility that processes input through multiple AI models concurrently (OpenAI, Claude, Gemini, and optionally Lambda.Chat) and provides a combined response, preserving the best parts of each individual output. Ideal for research, comparison, and leveraging the strengths of different models (often referred to as multi-prompting or meta-prompting).
 
-Multidoc allows you to send the same prompt to different AI models simultaneously and combine their responses. The tool:
+## Features
 
-1. Takes text input from stdin
-2. Processes the input through multiple AI models in parallel:
-   - GPT-4o (OpenAI)
-   - GPT-4.1 (OpenAI)
-   - GPT-o3 (OpenAI)
-   - GPT-o4-mini (OpenAI)
-   - Claude 3.7 Sonnet (Anthropic)
-   - Gemini 2.5 Pro Experimental (Google)
-   - Gemini 2.5 Flash Preview (Google)
-   - Optionally, scrapes Lambda.Chat using Playwright (requires Node.js and dependencies, enable with `-lc` flag)
-3. Collects responses from all sources with timing information
-4. Generates a combination of all model outputs using GPT-o4-mini
-5. Displays the output along with timing details
+*   **Concurrent Processing:** Sends the same prompt to multiple AI models simultaneously for faster results.
+*   **Supported Models:**
+    *   GPT-4o (OpenAI)
+    *   GPT-4.1 (OpenAI)
+    *   GPT-o3 (OpenAI)
+    *   GPT-o4-mini (OpenAI)
+    *   Claude 3.7 Sonnet (Anthropic)
+    *   Gemini 2.5 Pro Experimental (Google)
+    *   Gemini 2.5 Flash Preview (Google)
+*   **Combined Output:** Uses GPT-o4-mini to intelligently synthesize a single response from all model outputs.
+*   **Detailed Timing:** Reports execution time for each model and the total process duration.
+*   **Flexible Input:** Accepts prompts via standard input (stdin), allowing piping from commands or files.
+*   **(Optional) Lambda.Chat Scraping:** Includes functionality to scrape responses from Lambda.Chat using Playwright (requires Node.js).
 
-## Requirements
+## Prerequisites
 
-- Go 1.18 or later
-- API keys for:
-  - OpenAI API
-  - Google Gemini API
-  - Anthropic Claude API
-- (Optional) Node.js and `npm install` run in the `lambda_scraper` directory if using the `-lc` flag.
+*   **Go:** Version 1.18 or later.
+*   **API Keys:** You'll need API keys for the services you intend to use:
+    *   OpenAI API
+    *   Google Gemini API
+    *   Anthropic Claude API
+*   **(Optional) Node.js:** Required only if using the Lambda.Chat scraping feature (`-lc` flag).
 
 ## Installation
 
-1. Clone the repository:
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/xssdoctor/multidoc.git
+    cd multidoc
+    ```
 
-   ```
-   git clone https://github.com/xssdoctor/multidoc.git
-   cd multidoc
-   ```
+2.  **Install Go Dependencies:**
+    ```bash
+    go mod download
+    ```
 
-2. Install the required Go dependencies:
+3.  **(Optional) Install Node.js Dependencies:** If you plan to use the Lambda.Chat scraper (`-lc` flag):
+    ```bash
+    cd lambda_scraper
+    npm install
+    cd .. 
+    ```
+    *Note: `npm install` also downloads the necessary browser binaries for Playwright.*
 
-   ```
-   go mod download
-   ```
+## Configuration
 
-3. API Key Configuration:
+`multidoc` requires API keys to interact with the AI services.
 
-   The application will automatically create a config directory at `~/.config/multidoc` with a default `.env` file on first run.
+1.  **First Run:** The application will automatically create a configuration directory (`~/.config/multidoc`) and a template `.env` file the first time you run it (or try to build it if the directory doesn't exist). It will then exit, prompting you to add your keys.
 
-   Edit this file to add your API keys:
+2.  **Edit `.env` File:** Open the file `~/.config/multidoc/.env` in a text editor.
 
-   ```
-   ~/.config/multidoc/.env
-   ```
+3.  **Add API Keys:** Add your keys to the file, replacing the placeholder text:
+    ```dotenv
+    OPENAI_API_KEY=your_openai_api_key
+    GEMINI_API_KEY=your_gemini_api_key
+    ANTHROPIC_API_KEY=your_anthropic_api_key
+    ```
 
-   Add your API keys:
-
-   ```
-   OPENAI_API_KEY=your_openai_api_key
-   GEMINI_API_KEY=your_gemini_api_key
-   ANTHROPIC_API_KEY=your_anthropic_api_key
-   ```
-
-   Alternatively, you can create a `.env` file in the project directory with the same format.
+*Alternatively, you can create a `.env` file in the project's root directory.*
 
 ## Usage
 
-You can pipe text to the program or use interactive input:
+Provide your prompt to `multidoc` via standard input.
 
 ```bash
-# Using a pipe
+# Example 1: Using a pipe
 echo "Compare the benefits of REST vs GraphQL" | go run app.go
 
-# Using the Lambda.Chat scraper
+# Example 2: Using interactive input (type prompt, then Ctrl+D)
+go run app.go
+
+# Example 3: Using a file
+cat my_prompt.txt | go run app.go
+
+# Example 4: Using the Lambda.Chat scraper
 echo "Explain the concept of metaprompting" | go run app.go -lc
 
-# Using interactive input
-go run app.go
-# Then type your prompt and press Ctrl+D when finished
+# Example 5: Using the built executable
+echo "Summarize the plot of Hamlet" | ./multidoc 
 ```
 
-For larger prompts, you can use a text file:
+**Output:**
+The application will display:
+*   Progress updates as each model responds.
+*   A final synthesized response.
+*   Timing information for each model and the total execution time.
 
-```bash
-cat prompt.txt | go run app.go
-```
+## Building
 
-The output will display:
-
-- Progress updates as each model responds
-- A combination of the models best outputs
-- Timing information for each model and the total execution
-
-## Build
-
-To build an executable:
+To create a standalone executable:
 
 ```bash
 go build -o multidoc app.go
 ```
 
-Then you can run it directly:
+You can then run the compiled application directly (e.g., `./multidoc`).
 
-```bash
-./multidoc
-```
+## Contributing
 
-When you run the application for the first time, it will check if the configuration directory exists at `~/.config/multidoc` and create it if necessary, along with a template `.env` file. The application will then exit, allowing you to add your API keys before running it again.
+Contributions are welcome! Please feel free to:
+*   Open an issue to report bugs or suggest features.
+*   Submit a pull request with improvements.
 
 ## License
 
-MIT
+This project is licensed under the MIT License. (A `LICENSE` file is recommended but not currently present).
 
 ## Author
 
-xssdoctor & jhaddix
+*   xssdoctor
+*   jhaddix
