@@ -1,4 +1,4 @@
-module multidoc
+module github.com/Hadiasemi/multidoc
 
 go 1.21
 
