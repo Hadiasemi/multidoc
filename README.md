@@ -49,6 +49,10 @@ A Go-based utility that processes input through multiple AI models concurrently 
     cd .. 
     ```
     *Note: `npm install` also downloads the necessary browser binaries for Playwright.*
+### Option Two:
+```bash
+go install github.com/Hadiasemi/multidoc@latest
+```
 
 ## Configuration
 
