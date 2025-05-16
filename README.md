@@ -33,7 +33,7 @@ A Go-based utility that processes input through multiple AI models concurrently 
 
 1.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/xssdoctor/multidoc.git
+    git clone https://github.com/Hadiasemi/multidoc.git
     cd multidoc
     ```
 
